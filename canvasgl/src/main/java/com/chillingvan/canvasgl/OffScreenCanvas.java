@@ -34,7 +34,7 @@ import java.util.List;
 import androidx.annotation.Nullable;
 
 /**
- * @deprecated use {@link MultiTexOffScreenCanvas} instead
+ * //@deprecated use {@link MultiTexOffScreenCanvas} instead
  */
 public abstract class OffScreenCanvas extends MultiTexOffScreenCanvas {
 
