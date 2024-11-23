@@ -28,6 +28,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 
 import com.chillingvan.canvasgl.glcanvas.RawTexture;
 import com.chillingvan.canvasgl.glview.GLView;
@@ -35,7 +36,12 @@ import com.chillingvan.canvasgl.glview.texture.GLSurfaceTextureProducerView;
 import com.chillingvan.canvasgl.glview.texture.GLTexture;
 import com.chillingvan.canvasgl.glview.texture.gles.EglContextWrapper;
 import com.chillingvan.canvasgl.glview.texture.gles.GLThread;
+import com.chillingvan.canvasgl.textureFilter.CropFilter;
+import com.chillingvan.canvasgl.textureFilter.GammaFilter;
+import com.chillingvan.canvasgl.textureFilter.HueFilter;
+import com.chillingvan.canvasgl.textureFilter.LookupFilter;
 import com.chillingvan.canvasgl.textureFilter.PixelationFilter;
+import com.chillingvan.canvasgl.textureFilter.SaturationFilter;
 import com.chillingvan.canvasgl.util.Loggers;
 import com.chillingvan.canvasglsample.R;
 
@@ -73,6 +79,36 @@ public class TextureCameraActivity extends AppCompatActivity {
 
             }
         });
+
+//        GammaFilter gammaFilter = new GammaFilter(1.0f);
+        LookupFilter gammaFilter = new LookupFilter();
+//        HueFilter gammaFilter = new HueFilter(1.0f);
+
+        cameraTextureView.setTextureFilter(gammaFilter);
+
+        SeekBar seekBar= findViewById(R.id.seekBar);
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                gammaFilter.setValue(progress/100f);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+
+
+
+
+
         previewConsumerTextureView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -145,7 +181,7 @@ public class TextureCameraActivity extends AppCompatActivity {
         Camera.Parameters parms = mCamera.getParameters();
         mCamera.setDisplayOrientation(270);
 
-        CameraUtils.choosePreviewSize(parms, 1280, 720);
+        CameraUtils.choosePreviewSize(parms, 1440, 1440);
     }
 
 
